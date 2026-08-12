@@ -24,7 +24,10 @@ jobs:
           curl -L https://www.idris-lang.org/releases/idris2-0.8.0.tgz | tar -xz
           make -C Idris2-0.8.0 bootstrap SCHEME=chezscheme
       - name: Add Idris 2 to PATH
-        run: echo "$RUNNER_TEMP/Idris2-0.8.0/build/exec" >> "$GITHUB_PATH"
+        run: |
+          echo "$RUNNER_TEMP/Idris2-0.8.0/build/exec" >> "$GITHUB_PATH"
+          echo "IDRIS2_PATH=$RUNNER_TEMP/Idris2-0.8.0/libs/prelude/build/ttc:$RUNNER_TEMP/Idris2-0.8.0/libs/base/build/ttc" >> "$GITHUB_ENV"
+          echo "IDRIS2_INC_CGS=chez" >> "$GITHUB_ENV"
       - name: Test
         run: ./test.sh
       - name: Save Idris 2 cache
