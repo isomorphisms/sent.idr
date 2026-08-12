@@ -45,7 +45,7 @@ dump : List Slide -> String
 dump = joinBy "\n\n" . map dumpSlide
 
 clamp : Nat -> Nat -> Nat
-clamp count n = if count == 0 then 0 else min n (count - 1)
+clamp count n = if count == 0 then 0 else min n (count `minus` 1)
 
 at : Nat -> List a -> Maybe a
 at Z     (x :: _)  = Just x

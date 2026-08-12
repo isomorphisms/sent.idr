@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Cache Idris 2
         id: idris-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ${{ runner.temp }}/idris2
           key: idris2-0.8.0-${{ runner.os }}-${{ runner.arch }}
@@ -28,3 +28,9 @@ jobs:
         run: echo "$RUNNER_TEMP/idris2/bin" >> "$GITHUB_PATH"
       - name: Test
         run: ./test.sh
+      - name: Save Idris 2 cache
+        if: always() && steps.idris-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/idris2
+          key: idris2-0.8.0-${{ runner.os }}-${{ runner.arch }}
