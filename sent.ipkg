@@ -3,6 +3,6 @@ package sent
 version = 0.1.0
 brief = "A compact Idris 2 translation of suckless sent"
 
-sourcedir = .
+sourcedir = "."
 main = sent
 executable = sent
