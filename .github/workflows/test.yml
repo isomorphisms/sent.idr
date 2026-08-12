@@ -13,24 +13,23 @@ jobs:
         id: idris-cache
         uses: actions/cache/restore@v4
         with:
-          path: ${{ runner.temp }}/idris2
-          key: idris2-0.8.0-${{ runner.os }}-${{ runner.arch }}
+          path: ${{ runner.temp }}/Idris2-0.8.0
+          key: idris2-0.8.0-build-${{ runner.os }}-${{ runner.arch }}
       - name: Install Idris 2 prerequisites
-        if: steps.idris-cache.outputs.cache-hit != 'true'
         run: sudo apt-get update && sudo apt-get install -y chezscheme
       - name: Build Idris 2 0.8.0
         if: steps.idris-cache.outputs.cache-hit != 'true'
         run: |
+          cd "$RUNNER_TEMP"
           curl -L https://www.idris-lang.org/releases/idris2-0.8.0.tgz | tar -xz
           make -C Idris2-0.8.0 bootstrap SCHEME=chezscheme
-          make -C Idris2-0.8.0 install PREFIX="$RUNNER_TEMP/idris2"
       - name: Add Idris 2 to PATH
-        run: echo "$RUNNER_TEMP/idris2/bin" >> "$GITHUB_PATH"
+        run: echo "$RUNNER_TEMP/Idris2-0.8.0/build/exec" >> "$GITHUB_PATH"
       - name: Test
         run: ./test.sh
       - name: Save Idris 2 cache
         if: always() && steps.idris-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: ${{ runner.temp }}/idris2
-          key: idris2-0.8.0-${{ runner.os }}-${{ runner.arch }}
+          path: ${{ runner.temp }}/Idris2-0.8.0
+          key: idris2-0.8.0-build-${{ runner.os }}-${{ runner.arch }}
