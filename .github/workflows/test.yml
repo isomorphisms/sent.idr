@@ -1,0 +1,21 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  idris:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Idris 2 prerequisites
+        run: sudo apt-get update && sudo apt-get install -y chezscheme
+      - name: Build Idris 2 0.8.0
+        run: |
+          curl -L https://www.idris-lang.org/releases/idris2-0.8.0.tgz | tar -xz
+          make -C Idris2-0.8.0 bootstrap SCHEME=chezscheme
+          make -C Idris2-0.8.0 install PREFIX="$RUNNER_TEMP/idris2"
+          echo "$RUNNER_TEMP/idris2/bin" >> "$GITHUB_PATH"
+      - name: Test
+        run: ./test.sh

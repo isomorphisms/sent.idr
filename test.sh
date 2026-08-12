@@ -38,4 +38,14 @@ EOF
 
 build/exec/sent --dump "$tmp/input" >"$tmp/got"
 diff -u "$tmp/want" "$tmp/got"
-echo "sent parser test: passed"
+
+build/exec/sent --dump examples/demo.sent >"$tmp/example.got"
+diff -u examples/demo.rendered.txt "$tmp/example.got"
+
+# Exercise next, previous, reload, clamping at both ends, and quit.
+printf '\np\np\n\n\n\n\nr\nq\n' | build/exec/sent examples/navigation.sent >"$tmp/navigation.got"
+grep -q 'first' "$tmp/navigation.got"
+grep -q 'second' "$tmp/navigation.got"
+grep -q 'third' "$tmp/navigation.got"
+
+echo "sent parser, example rendering, and navigation tests: passed"

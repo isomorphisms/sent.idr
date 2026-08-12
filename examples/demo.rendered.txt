@@ -1,0 +1,12 @@
+sent.idr
+plain text slides
+
+one paragraph
+is one slide
+
+[image diagram.ff]
+
+@this is text, not an image
+#this is text, not a comment
+
+thanks / questions?

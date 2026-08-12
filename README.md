@@ -1,59 +1,30 @@
-sent is a simple plaintext presentation tool.
+# sent.idr
 
-sent does not need latex, libreoffice or any other fancy file format, it uses
-plaintext files to describe the slides and can include images via farbfeld.
-Every paragraph represents a slide in the presentation.
+A compact terminal translation of suckless `sent` in Idris 2.
 
-The presentation is displayed in a simple X11 window. The content of each slide
-is automatically scaled to fit the window and centered so you also don't have to
-worry about alignment. Instead you can really concentrate on the content.
+```sh
+idris2 --build sent.ipkg
+build/exec/sent slides
+```
 
+Each paragraph is a slide. Lines beginning with `#` are comments. A leading
+backslash escapes the first character. A paragraph whose first line begins
+with `@` is an image slide. `--dump` parses a deck without opening the
+interactive presenter and is intended for tests and other programs.
 
-Dependencies
+Run the behavioral test with `./test.sh`.
 
-You need Xlib and Xft to build sent and the farbfeld[0] tools installed to use
-images in your presentations.
+Example decks are in `examples/`. To see the parser's complete rendering of
+one without interacting:
 
-Demo
+```sh
+build/exec/sent --dump examples/demo.sent
+```
 
-To get a little demo, just type
+The behavioral reference is suckless `sent`, revision
+`882d54c225b83c762acf5bb3967f4890c3ecef86`.
+The original C implementation is preserved on the `main` branch. Copyright
+and ISC-license details remain in `LICENSE` and in the importing commit.
 
-	make && ./sent example
-
-You can navigate with the arrow keys and quit with `q`.
-
-
-Usage
-
-	sent [FILE]
-
-If FILE is omitted or equals `-`, stdin will be read. Produce image slides by
-prepending a `@` in front of the filename as a single paragraph. Lines starting
-with `#` will be ignored. A `\` at the beginning of the line escapes `@` and
-`#`. A presentation file could look like this:
-
-	sent
-	
-	@nyan.png
-	
-	depends on
-	- Xlib
-	- Xft
-	- farbfeld
-	
-	sent FILENAME
-	one slide per paragraph
-	# This is a comment and will not be part of the presentation
-	\# This and the next line start with backslashes
-	
-	\@FILE.png
-	
-	thanks / questions?
-
-
-Development
-
-sent is developed at http://tools.suckless.org/sent
-
-
-0: http://tools.suckless.org/farbfeld/
+This port currently renders text and image-slide placeholders in a terminal.
+It does not yet reproduce sent's X11 font fitting or farbfeld image display.
