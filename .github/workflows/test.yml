@@ -26,6 +26,7 @@ jobs:
       - name: Add Idris 2 to PATH
         run: |
           echo "$RUNNER_TEMP/Idris2-0.8.0/build/exec" >> "$GITHUB_PATH"
+          echo "IDRIS2_PREFIX=$RUNNER_TEMP/Idris2-0.8.0" >> "$GITHUB_ENV"
           echo "IDRIS2_PATH=$RUNNER_TEMP/Idris2-0.8.0/libs/prelude/build/ttc:$RUNNER_TEMP/Idris2-0.8.0/libs/base/build/ttc" >> "$GITHUB_ENV"
           echo "IDRIS2_INC_CGS=chez" >> "$GITHUB_ENV"
       - name: Test
