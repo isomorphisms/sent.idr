@@ -1,6 +1,7 @@
 # sent.idr
 
-A compact terminal translation of suckless `sent` in Idris 2.
+A compact terminal translation of suckless `sent` in Idris 2. The source is
+`Sent.idr`; Idris requires a capitalized module name and matching filename.
 
 ```sh
 idris2 --build sent.ipkg

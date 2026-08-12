@@ -1,4 +1,4 @@
-module sent
+module Sent
 
 import Data.List
 import Data.Maybe
